@@ -19,7 +19,7 @@ def game_start():
         {Fore.RED}exit{Fore.RESET} - 게임종료\n
         '''
         print(textwrap.dedent(init_print))
-        print("문제 번호를 입력해주세요.")
+        print("학습할 문제 풀이 게임 번호를 입력해주세요.")
         user_input_select = input("입력: ").strip()
 
         if utils.is_allow_number(user_input_select):
