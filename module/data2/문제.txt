@@ -1,0 +1,667 @@
+2: String gubun = request.getParameter("gubun");
+3: ......
+4: String sql = "SELECT * FROM board WHERE b_gubun = '" + gubun + "'";
+5: Connection con = db.getConnection();
+6: Statement stmt = con.createStatement();
+8: ResultSet rs = stmt.executeQuery(sql);
+
+======================================================
+4: <select id="boardSearch" parameterType="map" resultType="BoardDto">
+6: select * from tbl_board where title like '%${keyword}%' order by pos asc
+7: </select>
+
+======================================================
+5: String name = request.getParameter("name");
+7: Query query = session.createQuery("from Student where studentName = '" + name
++ "' ");
+
+======================================================
+1: public class CodeInjectionController {
+2: @RequestMapping(value = "/execute", method = RequestMethod.GET)
+3: public String execute(@RequestParam("src") String src)
+4: throws ScriptException {
+5: ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+6: ScriptEngine scriptEngine= scriptEngineManager.getEngineByName("javascript");
+8: String retValue = (String)scriptEngine.eval(src);
+9: return retValue;
+10: }
+11: }
+
+[JSP]
+1: <body>
+2: <%
+3: String name = request.getparameter("name");
+4: %>
+5: ...
+6:<script>
+8: (new Function(<%=name%>))();
+9: </script>
+10: </body>
+
+======================================================
+2: String fileName = request.getParameter("P");
+3: BufferedInputStream bis = null;
+4: BufferedOutputStream bos = null;
+5: FileInputStream fis = null;
+6: try {
+7: response.setHeader("Content-Disposition", "attachment;filename="+fileName+";");
+8: ...
+10: fis = new FileInputStream("C:/datas/" + fileName);
+11: bis = new BufferedInputStream(fis);
+12: bos = new BufferedOutputStream(response.getOutputStream());
+
+======================================================
+4: String helpFile = args[0];
+5: try (BufferedReader br = new BufferedReader(new FileReader(safeDir + helpFile))) {
+6: String line;
+7: while ((line = br.readLine()) != null) {
+8: System.out.println(line);
+9: }
+
+======================================================
+159   String data=request.getParameter("data");
+160   buffer.append(data);
+
+======================================================
+1: <% String keyword = request.getParameter("keyword"); %>
+3: 검색어 : <%=keyword%>
+
+2: 검색결과 : ${m.content}
+
+3: <script type=“text/javascript”>
+5: document.write(“keyword:” + <%=keyword%>);
+6: </script>
+
+======================================================
+79  process = Runtime.getRuntime().exec(cmd);
+
+======================================================
+1: public static void main(String args[]) throws IOException {
+3: String cmd = args[0];
+4: Process ps = null;
+5: try {
+6: ps = Runtime.getRuntime().exec(cmd);
+7: ...
+
+======================================================
+2: String date = request.getParameter("date");
+3: String command = new String("cmd.exe /c backuplog.bat");
+4: Runtime.getRuntime().exec(command + date);
+
+======================================================
+191   File uploadFile = new File(uploadPath+ fileName);
+
+======================================================
+4: String fileName = multi.getFilesystemName("filename");
+15: Thumbnail.create(savePath+"/"+fileName, savePath+"/"+"s_"+fileName, 150);
+
+======================================================
+4: String rd = request.getParameter("redirect");
+11: rs.next();
+12: if ("0".equals(rs.getString(1)) && "01AD".equals(bn)) {
+13: response.sendRedirect(rd);
+14: return;
+15: }
+
+======================================================
+receivedXML
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE foo [
+<!ELEMENT foo ANY >
+<!ENTITY xxe SYSTEM "file:///etc/passwd" >]><foo>&xxe;</foo>
+
+1: public void unmarshal(File receivedXml)
+2:throws JAXBException, ParserConfigurationException, SAXException, IOException {
+3: JAXBContext jaxbContext = JAXBContext.newInstance( Student.class );
+4: Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+6: DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+7: dbf.setNamespaceAware(true);
+8: DocumentBuilder db = dbf.newDocumentBuilder();
+9: Document document = db.parse(receivedXml);
+11: Student employee = (Student) jaxbUnmarshaller.unmarshal( document );
+12: }
+
+secure.xml
+<?xml version="1.0"?>
+<!DOCTYPE foo SYSTEM "file:/dev/tty">
+<foo>bar</foo>   
+
+10: saxParser.parse(new FileInputStream("secure.xml"), new DefaultHandler());
+11: }
+12: }
+
+======================================================
+54  String expression = "/addresses/address[@name='"+name+"']/ccard";
+55  NodeList nodeList = (NodeList) xPath.compile(expression)
+              .evaluate(xmlDocument, XPathConstants.NODESET);
+
+======================================================
+2: String name = props.getProperty("name");
+3: .......
+5: String es = "doc('users.xml')/userlist/user[uname='"+name+"']";
+6: XQPreparedExpression expr = conn.prepareExpression(es);
+7: XQResultSequence result = expr.executeQuery();
+
+======================================================
+1:String nm = props.getProperty("name");
+2:String pw = props.getProperty("password");
+7:XPathExpression expr = xpath.compile("//users/user[login/text()='"+nm+"' and
+password/text()='"+pw+"']/home_dir/text()");
+
+======================================================
+“//users/user[login/text()=‘tester’ and password/text()=‘x’ or //‘x’=‘x’]/home_dir/text()
+
+======================================================
+6: String name = args[0];
+7: DocumentBuilder docBuilder =DocumentBuilderFactory.newInstance().newDocumentBuilder();
+Document doc = docBuilder.parse("http://www.w3schools.com/xml/simple.xml");
+8: XPath xpath = XPathFactory.newInstance().newXPath();
+9: NodeList nodes = (NodeList) xpath.evaluate("//food[name='" + name + "']/price",
+doc, XPathConstants.NODESET);
+
+======================================================
+11: String filter = "(&(sn=" + userSN + ")(userPassword=" + userPassword + "))";
+
+======================================================
+1:protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws
+IOException {
+3: URL url = new URL(req.getParameter("url"));
+4: HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+5:}
+
+======================================================
+1: String lastLogin = request.getParameter("last_login");
+2: if (lastLogin == null || "".equals(lastLogin)) {
+3: return;
+4: }
+5: Cookie c = new Cookie("LASTLOGIN", lastLogin);
+6: c.setMaxAge(1000);
+7: c.setSecure(true);
+8: response.addCookie(c);
+9: response.setContentType("text/html");
+
+======================================================
+1: String msg_str = "";
+2: String tmp = request.getParameter("slf_msg_param_num");
+3: tmp = StringUtil.isNullTrim(tmp);
+4: if (tmp.equals("0")) {
+5: msg_str = PropertyUtil.getValue(msg_id);
+6: } else {
+7: int param_ct = Integer.parseInt(tmp);
+8: String[] strArr = new String[param_ct];
+
+======================================================
+1: <input type="hidden" name="price" value="1000"/>
+2: <br/>품목 : HDTV
+3: <br/>수량 : <input type="hidden" name="quantity" />개
+4: <br/><input type="submit" value="구입" />
+5: ......
+6: try {
+7: price = request.getParameter("price");
+8: quantity = request.getParameter("quantity");
+9: total = Integer.parseInt(quantity) * Float.parseFloat(price);
+10:} catch (Exception e) {
+11:......
+
+======================================================
+1: typedef struct _charvoid {
+2: char x[16];
+3: void * y;
+4: void * z;
+5: } charvoid
+6: void badCode() {
+7: charvoid cv_struct
+8: cv_struct.y = (void *) SRC_STR;
+9: printLine((char *) cv_struct.y);
+10: memcpy(cv_struct.x, SRC_STR, sizeof(cv_struct));
+11: printLine((char *) cv_struct.x);
+12: printLine((char *) cv_struct.y);
+13:}
+
+======================================================
+1: import java.util.Calendar
+2: ......
+3: public static void main(String[] args) {
+4: Calendar validDate = Calendar.getInstance();
+5: validDate.set(2014, Calendar.OCTOBER, 14);
+6: System.out.printf( args[0] + " did not match! HINT: It was issued on %1$te of
+some month", validate);
+7: }
+
+======================================================
+1: void incorrect_password(const char *user) {
+2: static const char msg_format[] = "%s cannot be authenticated.\n";
+3: size_t len = strlen(user) + sizeof(msg_format);
+4: char *msg = (char *)malloc(len);
+5: if (msg == NULL) {
+6: }
+7: int ret = snprintf(msg, len, msg_format, user);
+8: if (ret < 0 || ret >= len) {
+9: }
+//
+10: fprintf(stderr, msg);
+11: free(msg);
+12: msg = NULL;
+13:}
+
+======================================================
+4: String userId = (String) session.getAttribute("userId");
+5: String passwd = request.getParameter("oldUserPw");
+6: ...
+7: if (service.modifyMember(memberModel)) {
+8: mav.setViewName("redirect:/board/list.do");
+9: session.setAttribute("userName", memberModel.getUserName());
+10: return mav;
+11: } else {
+12: mav.addObject("errCode", 2);
+13: mav.setViewName("/board/member_modify");
+14: return mav;
+15: }
+16:}
+
+======================================================
+1: private BoardDao boardDao;
+2: String action = request.getParameter("action");
+3: String contentId = request.getParameter("contentId");
+4: if (action != null && action.equals("delete")) {
+5: boardDao.delete(contentId);
+6: } 
+
+======================================================
+1: File file = new File("/home/setup/system.ini");
+2: file.setExecutable(true, false);
+3: file.setReadable(true, false);
+4: file.setWritable(true, false);
+
+======================================================
+1: import java.security.*;
+2: import javax.crypto.Cipher;
+3: import javax.crypto.NoSuchPaddingException;
+4: public class CryptoUtils {
+5: public byte[] encrypt(byte[] msg, Key k) {
+6: byte[] rslt = null;
+7: try {
+8: Cipher c = Cipher.getInstance("DES");
+9: c.init(Cipher.ENCRYPT_MODE, k);
+10: rslt = c.update(msg);
+11: }
+
+======================================================
+2: String pwd = request.getParameter("pwd");
+3: ......
+4: String sql = " insert into customer(id, pwd, name, ssn, zipcode, addr)“
++ " values (?, ?, ?, ?, ?, ?)";
+5: PreparedStatement stmt = con.prepareStatement(sql);
+6: stmt.setString(1, id);
+7: stmt.setString(2, pwd);
+......
+8: stmt.executeUpdate();
+
+======================================================
+1: try {
+2: Socket s = new Socket("taranis", 4444);
+3: PrintWriter o = new PrintWriter(s.getOutputStream(), true);
+4: String password = getPassword();
+5: o.write(password);
+6: } catch (FileNotFoundException e) {
+7: ……
+
+======================================================
+5: private static final String PASS = "SCOTT"; // DB ID;
+6: private static final String PASS = "SCOTT"; // DB PW;
+7: public Connection getConn() {
+8: Connection con = null;
+9: try {
+10: Class.forName(DRIVER);
+11: con = DriverManager.getConnection(URL, USER, PASS);
+12: ……
+
+======================================================
+6: String key = "22df3023sf~2;asn!@#/>as";
+7: if (key != null) {
+8: byte[] bToEncrypt = usr.getBytes("UTF-8");
+9: SecretKeySpec sKeySpec = new SecretKeySpec(key.getBytes(), "AES");
+
+======================================================
+7: keyGen.initialize(1024);
+8: final KeyPair key = keyGen.generateKeyPair();
+9: File privateKeyFile = new File(PRIVATE_KEY_FILE);
+10: File publicKeyFile = new File(PUBLIC_KEY_FILE);
+
+======================================================
+1: import java.util.Random;
+2: ...
+3: public Static int getRandomValue(int maxValue) {
+4: Random random = new Random(100);
+5: return random.nextInt(maxValue);
+6: }
+
+======================================================
+7: public Static String getAuthKey() {
+8: Random random = new Random();
+9: String authKey = Integer.toString(random.nextInt());
+
+======================================================
+1: String id = request.getParameter("id");
+2: String pass = request.getParameter("pass");
+3: UserVo userVO = new UserVo(id, pass);
+4: ……
+5: String result = registerDAO.register(userVO);
+
+======================================================
+1: File f = new File(downloadedFilePath);
+2: JarFile jf = new JarFile(f);
+
+======================================================
+1:if ((cert = SSL_get_peer_certificate(ssl)) && host)
+2:foo=SSL_get_verify_result(ssl);
+3:if ((X509_V_OK==foo) ||X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN==foo))
+
+======================================================
+1:cert = SSL_get_peer_certificate(ssl);
+2:if (cert && (SSL_get_verify_result(ssl)==X509_V_OK)) {
+	 ...
+4: }
+
+======================================================
+1:cert = SSL_get_peer_certificate(ssl);
+2:if (cert) {
+4: ...
+5:}
+
+======================================================
+1: Cookie loginCookie = new Cookie("rememberme", "YES");
+2: loginCookie.setMaxAge(60*60*24*365);
+3: response.addCookie(loginCookie);
+
+======================================================
+// DB연결 root / a1q2w3r3f2!@
+1: con = DriverManager.getConnection(URL, USER, PASS);
+
+======================================================
+1: public String getPasswordHash(String password) throws Exception {
+2: MessageDigest md = MessageDigest.getInstance("SHA-256");
+3: md.update(password.getBytes());
+4: byte byteData[] = md.digest();
+5: StringBuffer hexString = new StringBuffer();
+6: for (int i=0; i<byteData.length i++) {
+7: String hex=Integer.toHexString(0xff & byteData[i]);
+8: if (hex.length() == 1) {
+9: hexString.append('0');
+10: }
+11: hexString.append(hex);
+12: }
+13: return hexString.toString();
+14:}
+
+======================================================
+1: URL[] classURLs = new URL[] { new URL("file:subdir/") };
+2: URLClassLoader loader = new URLClassLoader(classURLs);
+3: Class loadedClass = Class.forName("LoadMe", true, loader);
+
+======================================================
+1: private static final String SERVER_IP = "127.0.0.1";
+2: private static final int SERVER_PORT = 8080;
+3: private static final int FAIL = -1;
+4: public void login() {
+5: String username = null;
+6: String password = null;
+7: Socket socket = null;
+8: in t result = FAIL;
+9: try {
+10: socket = new Socket(SERVER_IP, SERVER_PORT);
+11: while (result == FAIL) {
+12: ...
+13: result = verifyUser(username, password);
+14: }
+15: }
+
+======================================================
+1: class FileMgmtThread extends Thread {
+2: private String manageType = "";
+3: public FileMgmtThread (String type) {
+4: manageType = type;
+5: }
+6: public void run() {
+7: try {
+8: if (manageType.equals("READ")) {
+9: File f = new File("Test_367.txt");
+10: if (f.exists()) {
+11: BufferedReader br = new BufferedReader(new FileReader(f));
+12: br.close();
+13: }
+14: } else if (manageType.equals("DELETE")) {
+15: File f = new File("Test_367.txt");
+16: if (f.exists()) {
+17: f.delete();
+18: } else { … }
+19: }
+20: } catch (IOException e) { … }
+21: }
+22:}
+23:public class CWE367 {
+24: public static void main (String[] args) {
+25: FileMgmtThread fileAccessThread = new FileMgmtThread("READ");
+26: FileMgmtThread fileDeleteThread = new FileMgmtThread("DELETE");
+27: fileAccessThread.start();
+28: fileDeleteThread.start();
+29: }
+30:}
+
+======================================================
+1: #include <stdio.h>
+2: int factorial(int i)
+3: {
+4: return i * factorial(i - 1);
+5: }
+6: int main()
+7: {
+8: int num = 5;
+9: int result = factorial(num);
+10: printf("%d! : %d\n", num, result);
+11: return 0;
+12:}
+
+======================================================
+1: try {
+2: rd = new BufferedReader(new FileReader(new File(filename)));
+3: } catch(IOException e) {
+4: e.printStackTrace();
+5: }
+
+======================================================
+1: } catch(IOException e) {
+2: System.err.print(e.getMessage());
+3: }
+
+======================================================
+1: protected Element createContent(WebSession s) {
+2: ……
+3: try {
+4: username = s.getParser().getRawParameter(USERNAME);
+5: password = s.getParser().getRawParameter(PASSWORD);
+6: if (!"webgoat".equals(username) || !password.equals("webgoat")) {
+7: s.setMessage("Invalid username and password entered.");
+8: return (makeLogin(s));
+9: }
+10: } catch (NullPointerException e) {
+11: }
+
+======================================================
+1: try {
+2: ...
+3: reader = new BufferedReader(new InputStreamReader(url.openStream()));
+4: String line = reader.readLine();
+5: SimpleDateFormat format = new SimpleDateFormat("MM/DD/YY");
+6: Date date = format.parse(line);
+7: } catch (Exception e) {
+8: System.err.println("Exception : " + e.getMessage());
+9: }
+
+======================================================
+1: public static int cardinality (Object obj, final Collection col) {
+2: int count = 0;
+3: if (col == null) {
+4: return count;
+5: }
+6: Iterator it = col.iterator();
+7: while (it.hasNext()) {
+8: Object elt = it.next();
+9: if ((null == obj && null == elt) || obj.equals(elt)) {
+10: count++;
+11: }
+12: }
+13: return count;
+14: }
+
+======================================================
+1: InputStream in = null;
+2: OutputStream out = null;
+3: try {
+4: in = new FileInputStream(inputFile);
+5: out = new FileOutputStream(outputFile);
+6: ...
+7: FileCopyUtils.copy(fis, os);
+9: in.close();
+10: out.close();
+11:} catch (IOException e) {
+12: logger.error(e);
+13:}
+
+======================================================
+1: int main(int argc, const char *argv[]) {
+2: char *temp;
+3: temp = (char *)malloc(BUFFER_SIZE);
+4: ……
+5: free(temp);
+7: stmcpy(temp, argv[1], BUFFER_SIZE-1);
+8: }
+
+======================================================
+1: char *data;
+2: int data_type
+3: if (data_type==val_1) { free(data); }
+4: ……
+6: if (data_type==val_2) { free(data); }
+
+======================================================
+2: int x, y;
+3: switch(position) {
+4: case 0: x = base_position y = base_position beak;
+5: case 1: x = base_position + i y = base_position - i break;
+6: default: x=1; break;
+7: }
+8: setCursorPosition(x,y);
+
+======================================================
+1: class DeserializeExample {
+2: public static Object deserialize(byte[] buffer)
+3: throws IOException, ClassNotFoundException {
+4: Object ret = null;
+5: try (ByteArrayInputStream bais = new ByteArrayInputStream(buffer)) {
+6: try (ObjectInputStream ois = new ObjectInputStream(bais)) {
+7: ret = ois.readObject();
+8: }
+9: }
+10: return ret;
+11: }
+12:}
+
+======================================================
+1;public static void main(String[] args) throws
+2:IOException, GeneralSecurityException, ClassNotFoundException {
+3: ....
+5: ObjectInputStream in = new ObjectInputStream(new FileInputStream("data"));
+6: sealedMap = (SealedObject) in.readObject();
+7: in.close();
+8:
+10: cipher = Cipher.getInstance("AES");
+11: cipher.init(Cipher.DECRYPT_MODE, key);
+12: signedMap = (SignedObject) sealedMap.getObject(cipher);
+13:
+14: map = (SerializableMap<String, Integer>) signedMap.getObject();
+15:}
+
+======================================================
+1: <%@page import="javax.xml.namespace.*"%>
+2: <%@page import="gov.mogaha.ntis.web.frs.gis.cmm.util.*" %>
+3: <%!
+5: String username = "/";
+6: String imagePath = commonPath + "img/";
+7: String imagePath_gis = imagePath + "gis/cmm/btn/";
+8: ……
+9: %>
+
+======================================================
+1: @Controller
+2: public class TrendForecastController {
+4: private int currentPage = 1;
+5: public void doSomething(HttpServletRequest request) {
+6: currentPage = Integer.parseInt(request.getParameter("page"));
+7: }
+8: ……
+
+======================================================
+1: class Base64 {
+2: public static void main(String[] args) {
+3: if (debug) {
+4: byte[] a = { (byte) 0xfc, (byte) 0x0f, (byte) 0xc0 };
+5: byte[] b = { (byte) 0x03, (byte) 0xf0, (byte) 0x3f };
+6: ……
+7: }
+8: }
+9: public void otherMethod() { … }
+10:}
+
+======================================================
+2: private Color[] colors;
+3: public Color[] getUserColors(Color[] userColors) { return colors; }
+
+======================================================
+2: private String[] colors;
+3: public String[] getColors() { return colors; }
+
+======================================================
+2: private UserRole[] userRoles;
+3: public void setUserRoles(UserRole[] userRoles) {
+4: this.userRoles = userRoles;
+5: }
+
+======================================================
+2: private String[] userRoles;
+3: public void setUserRoles(String[] userRoles) {
+4: this.userRoles = userRoles;
+5: }
+
+======================================================
+1: public void doGet(HttpServletRequest req, HttpServletResponse res)
+throws ServletException, IOException {
+2: boolean trusted = false;
+3: String ip = req.getRemoteAddr();
+4: InetAddress addr = InetAddress.getByName(ip);
+6: if (addr.getCanonicalHostName().endsWith("trustme.com")) {
+7: do_something_for_Trust_System();
+8: }
+
+======================================================
+1: public class S246 extends javax.servlet.http.HttpServlet {
+2: private Socket socket
+3: protected void doGet(HttpServletRequest request,
+4: HttpServletResponse response) throws ServletException {
+5: try {
+7: socket = new Socket("kisa.or.kr", 8080);
+8: } catch (UnknownHostException e) {
+9: .......
+
+======================================================
+1: public class U382 extends HttpServlet {
+2: public void doPost(HttpServletRequest request, HttpServletResponse response)
+3: throws ServletException, IOException {
+4: try {
+5: do_something(logger);
+6: } catch (IOException ase) {
+7: logger.info("ERROR");
+9: System.exit(1);
+10: }
+}
+}
